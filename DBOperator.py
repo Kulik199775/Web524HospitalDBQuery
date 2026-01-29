@@ -6,32 +6,41 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class HospitalDB:
-    def __init__(self, server, database, username, password):
+    def __init__(self):
         """Инициализация подключения к MSSQL Server"""
         SERVER = os.getenv('MS_SQL_SERVER')
         DATABASE = os.getenv('MS_SQL_DATABASE')
-        USERNAME = os.getenv('MS_SQL_USER')
+        USER = os.getenv('MS_SQL_USER')
         PASSWORD = os.getenv('MS_SQL_KEY')
         DRIVER = os.getenv('MS_SQL_DRIVER')
 
         self.connection_string = (
-            f"DRIVER={{{DRIVER}}};"
-            f"SERVER={SERVER};"
-            f"DATABASE={DATABASE};"
-            f"UID={USERNAME};"
-            f"PASSWORD={PASSWORD}"
+            f"""DRIVER={{{DRIVER}}};
+            SERVER={SERVER};
+            DATABASE={DATABASE};
+            UID={USER};
+            PWD={PASSWORD};"""
+            "TrustServerCertificate=yes"
         )
         self.conn = None
+        self.cursor = None
+        self.is_connected = False
         self.connect()
 
     def connect(self):
         """Установка соединения с БД"""
         try:
             self.conn = pyodbc.connect(self.connection_string)
+            self.conn.autocommit = True
             self.cursor = self.conn.cursor()
-            print(f'Подключение к БД успешно выполнено')
+            self.is_connected = True
+            print('Подключение к БД успешно выполнено')
+
         except Exception as ex:
             print(f'Ошибка подключения: {ex}')
+            self.is_connected = False
+            self.conn = None
+            self.cursor = None
 
     def close(self):
         """Закрытие соединения"""
@@ -233,7 +242,6 @@ class HospitalDB:
                 'row_count': len(rows),
                 'data': data_list
             }
-
             try:
                 with open(filename, 'r', encoding='utf-8') as f:
                     file_content = f.read().strip()
