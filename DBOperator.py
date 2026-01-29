@@ -151,7 +151,7 @@ class HospitalDB:
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
 
-    def right_jon_query(self):
+    def right_join_query(self):
         """Все обследования и врачи, которые их проводят"""
         SQL_QUERY = """SELECT e.Name as ExaminationName,
                             d.Surname, d.Name as DoctorName,
@@ -246,3 +246,45 @@ class HospitalDB:
         except Exception as ex:
             print(f'Ошибка при сохранении в JSON: {ex}')
             return False
+
+    def execute_all_queries_and_save(self, filename="hospital_results.json"):
+        """Выполнение всех запросов и сохранение результатов"""
+        queries = [
+            ("EXISTS_1 - Врачи с премией > 5000", self.exists_query_1),
+            ("EXISTS_2 - Отделения с палатами > 3 мест", self.exists_query_2),
+            ("ANY - Врачи с зарплатой больше любой", self.any_query),
+            ("SOME - Спонсоры 1 корпуса", self.some_query),
+            ("ALL - Врачи с зарплатой больше всех", self.all_query),
+            ("Combined - ANY/ALL сочетание", self.combined_query),
+            ("UNION - Спонсоры и обследования", self.union_query),
+            ("UNION ALL - Врачи и отделения", self.union_all_query),
+            ("INNER JOIN - Врачи и обследования", self.inner_join_query),
+            ("LEFT JOIN - Все врачи", self.left_join_query),
+            ("RIGHT JOIN - Все обследования", self.right_join_query),
+            ("FULL JOIN - Все врачи и обследования", self.full_join_query)
+        ]
+
+        print("=" * 40)
+        print("Выполнение всех запросов и сохранение в JSON")
+        print("=" * 40)
+
+        for query_name, query_func in queries:
+            print(f"\nВыполняем запрос: {query_name}")
+
+            try:
+                results = query_func()
+                print(f"Найдено записей: {len(results)}")
+
+                if len(results) > 0:
+                    print("Первые 3 записи:")
+                    for i in range(min(3, len(results))):
+                        print(f"  {i + 1}. {results[i]}")
+
+                self.save_to_json(results, query_name, filename)
+
+            except Exception as e:
+                print(f"Ошибка при выполнении запроса '{query_name}': {e}")
+
+        print("\n" + "=" * 40)
+        print("Все запросы успешно выполнены")
+        print("=" * 40)
