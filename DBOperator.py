@@ -187,3 +187,62 @@ class HospitalDB:
                         ORDER BY ExaminationName, Surname;"""
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
+
+    def rows_to_dict_list(self, rows):
+        """Преобразование результатов запроса в список словарей"""
+        if not rows:
+            return []
+
+        result = []
+        columns = [column[0] for column in self.cursor.description]
+
+        for row in rows:
+            row_dict = {}
+            for i, col in enumerate(columns):
+                value = row[i]
+                if value is None:
+                    row_dict[col] = None
+                elif isinstance(value, (int, float, str, bool)):
+                    row_dict[col] = value
+                else:
+                    row_dict[col] = str(value)
+            result.append(row_dict)
+        return result
+
+    def save_to_json(self, rows, query_name, filename='hospital_queries.json'):
+        """Сохранение результатов в JSON файл"""
+        try:
+            data_list = self.rows_to_dict_list(rows)
+            self.cursor.execute("SELECT CONVERT(VARCHAR, GATDATE(), 120)")
+            current_time = self.cursor.fetchone()[0]
+
+            save_data = {
+                'query_name': query_name,
+                'timestamp': current_time,
+                'row_count': len(rows),
+                'data': data_list
+            }
+
+            try:
+                with open(filename, 'r', encoding='utf-8') as f:
+                    file_content = f.read().strip()
+                    if file_content:
+                        all_data = json.loads(file_content)
+                    else:
+                        all_data = {}
+            except:
+                all_data = {}
+
+            if 'queries' not in all_data:
+                all_data['queries'] = []
+
+            all_data['queries'].append(save_data)
+
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(all_data, f, ensure_ascii=False, indent=2)
+            print(f'Результаты запроса {query_name} сохранены в {filename}')
+            return True
+
+        except Exception as ex:
+            print(f'Ошибка при сохранении в JSON: {ex}')
+            return False
