@@ -150,3 +150,40 @@ class HospitalDB:
                         ORDER BY d.Surname;"""
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
+
+    def right_jon_query(self):
+        """Все обследования и врачи, которые их проводят"""
+        SQL_QUERY = """SELECT e.Name as ExaminationName,
+                            d.Surname, d.Name as DoctorName,
+                            de.StartTime, de.EndTime
+                        FROM dbo.Examinations e
+                        RIGHT JOIN dbo.DoctorsExaminations de ON e.id = de.ExaminatoinId
+                        RIGHT JOIN dbo.Doctors d ON de.DoctorId = d.id
+                        WHERE e.Name IS NOT NULL
+                        ORDER BY e.Name, d.Surname;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
+
+    def full_join_query(self):
+        """Все врачи и все обследования"""
+        SQL_QUERY = """SELECT d.Surname, d.Name as DoctorName, 
+                            e.Name as ExaminationName,
+                            de.StartTime, de.EndTime,
+                            'Doctor-Examination' as JoinType
+                        FROM dbo.Doctors d
+                        LEFT JOIN dbo.DoctorsExaminations de ON d.id = de.DoctorId
+                        LEFT JOIN dbo.Examinations e ON de.ExaminationId = e.id
+        
+                        UNION
+        
+                        SELECT NULL as Surname, NULL as DoctorName,
+                                e.Name as ExaminationName,
+                                NULL as StartTime, NULL as EndTime,
+                                'Examination only' as JoinType
+                        FROM dbo.Examinations e
+                        WHERE e.id NOT IN (SELECT DISTINCT ExaminationId 
+                        FROM dbo.DoctorsExaminations 
+                        WHERE ExaminationId IS NOT NULL)
+                        ORDER BY ExaminationName, Surname;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
