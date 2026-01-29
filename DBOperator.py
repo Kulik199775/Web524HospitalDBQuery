@@ -78,3 +78,29 @@ class HospitalDB:
                         ORDER BY don.Amount DESC;"""
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
+
+    def all_query(self):
+        """Врачи, чья зарплата больше всех врачей с премией 0"""
+        SQL_QUERY = """SELECT d.Surname, d.Name, d.Salary, d.Premium
+                        FROM dbo.Doctors d
+                        WHERE d.Salary > ALL (SELECT Salary 
+                                                FROM dbo.Doctors 
+                                                WHERE Premium = 0)
+                        ORDER BY d.Salary;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
+
+    def combined_query(self):
+        """Врачи, чья зарплата больше всех враче с премией меньше 1000
+        и у которых есть хоть одно обследование"""
+        SQL_QUERY = """SELECT d.Surname, d.Name, d.Salary, d.Premium
+                        FROM dbo.Doctors d
+                        WHERE d.Salary > ALL (SELECT Salary 
+                                                FROM dbo.Doctors 
+                                                WHERE Premium < 1000)
+                        AND EXISTS (SELECT 1 
+                            FROM dbo.DoctorsExaminations de 
+                            WHERE de.DoctorId = d.id)
+                        ORDER BY d.Salary DESC;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
