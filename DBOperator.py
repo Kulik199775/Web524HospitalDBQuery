@@ -53,3 +53,28 @@ class HospitalDB:
                         ORDER BY dep.Building;"""
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
+
+    def any_query(self):
+        """Врачи, чья зарплата больше любой зарплаты врачей с премией меньше 2000"""
+        SQL_QUERY = """SELECT d.Surname, d.Name, d.Salary, d.Premium
+                        FROM dbo.Doctors d
+                        WHERE d.Salary > ANY (
+                            SELECT Salary
+                            FROM dbo.Doctors
+                            WHERE Premium < 2000)
+                        ORDER BY d.Salary DESC;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
+
+    def some_query(self):
+        """Спонсоры, которые сделали пожертвования в любое отделение в 1корпусе"""
+        SQL_QUERY = """SELECT s.Name as SponsorName, d.Name as DepartmentName, don.Amount, don.Date
+                        FROM dbo.Sponsors s
+                        INNER JOIN dbo.Donations don ON s.id = don.SponsorId
+                        INNER JOIN dbo.Departments d ON don.DepartmentId = d.id
+                        WHERE d.id = SOME (SELECT id 
+                                            FROM dbo.Departments 
+                                            WHERE Building = 1)
+                        ORDER BY don.Amount DESC;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
