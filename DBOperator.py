@@ -1,6 +1,9 @@
 import json
 import pyodbc
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class HospitalDB:
     def __init__(self, server, database, username, password):
@@ -140,7 +143,7 @@ class HospitalDB:
                             de.StartTime, de.EndTime
                         FROM dbo.Doctors d
                         INNER JOIN dbo.DoctorsExaminations de ON d.id = de.DoctorId
-                        INNER JOIN dbo.Examination e ON de.ExaminationId = e.id
+                        INNER JOIN dbo.Examinations e ON de.ExaminationId = e.id
                         ORDER BY d.Surname, de.StartTime;"""
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
@@ -163,7 +166,7 @@ class HospitalDB:
                             d.Surname, d.Name as DoctorName,
                             de.StartTime, de.EndTime
                         FROM dbo.Examinations e
-                        RIGHT JOIN dbo.DoctorsExaminations de ON e.id = de.ExaminatoinId
+                        RIGHT JOIN dbo.DoctorsExaminations de ON e.id = de.ExaminationId
                         RIGHT JOIN dbo.Doctors d ON de.DoctorId = d.id
                         WHERE e.Name IS NOT NULL
                         ORDER BY e.Name, d.Surname;"""
@@ -219,13 +222,13 @@ class HospitalDB:
         """Сохранение результатов в JSON файл"""
         try:
             data_list = self.rows_to_dict_list(rows)
-            self.cursor.execute("SELECT CONVERT(VARCHAR, GATDATE(), 120)")
+            self.cursor.execute("SELECT CONVERT(VARCHAR, GETDATE(), 120)")
             current_time = self.cursor.fetchone()[0]
 
             save_data = {
                 'query_name': query_name,
                 'database': os.getenv('MS_SQL_DATABASE'),
-                'server': os.getenv('MS_SQL_SERVER')
+                'server': os.getenv('MS_SQL_SERVER'),
                 'timestamp': current_time,
                 'row_count': len(rows),
                 'data': data_list
@@ -296,3 +299,33 @@ class HospitalDB:
         print("\n" + "=" * 40)
         print("Все запросы успешно выполнены")
         print("=" * 40)
+
+if __name__ == '__main__':
+    print("=" * 40)
+    print("Программа для работы с БД Hospital")
+    print("=" * 40)
+
+    print("\nЗагруженные настройки:")
+    print(f"Сервер: {os.getenv('MS_SQL_SERVER')}")
+    print(f"База данных: {os.getenv('MS_SQL_DATABASE')}")
+    print(f"Пользователь: {os.getenv('MS_SQL_USER')}")
+    print(f"Драйвер: {os.getenv('MS_SQL_DRIVER', 'ODBC Driver 17 for SQL Server')}")
+
+    print("\nПодключение к базе данных...")
+    db = HospitalDB()
+
+    if db.conn is None:
+        print("Не удалось подключиться к базе данных. Программа завершена.")
+
+    try:
+        output_file = "hospital_queries_results.json"
+        db.execute_all_queries_and_save(output_file)
+
+        print(f"\nДля просмотра результатов откройте файл: {output_file}")
+        print("Или используйте команду:")
+        print(f"  python -m json.tool {output_file}")
+
+    except Exception as e:
+        print(f"\nОшибка в работе программы: {e}")
+    finally:
+        db.close()
