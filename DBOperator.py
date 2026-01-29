@@ -1,16 +1,22 @@
 import json
 import pyodbc
-from dotenv import load_dotenv
+import os
 
 class HospitalDB:
     def __init__(self, server, database, username, password):
         """Инициализация подключения к MSSQL Server"""
+        SERVER = os.getenv('MS_SQL_SERVER')
+        DATABASE = os.getenv('MS_SQL_DATABASE')
+        USERNAME = os.getenv('MS_SQL_USER')
+        PASSWORD = os.getenv('MS_SQL_KEY')
+        DRIVER = os.getenv('MS_SQL_DRIVER')
+
         self.connection_string = (
-            f"DRIVER={{ODBC Driver 18 for SQL Server}};"
-            f"SERVER={server};"
-            f"DATABASE={database};"
-            f"UID={username};"
-            f"PASSWORD={password}"
+            f"DRIVER={{{DRIVER}}};"
+            f"SERVER={SERVER};"
+            f"DATABASE={DATABASE};"
+            f"UID={USERNAME};"
+            f"PASSWORD={PASSWORD}"
         )
         self.conn = None
         self.connect()
@@ -218,6 +224,8 @@ class HospitalDB:
 
             save_data = {
                 'query_name': query_name,
+                'database': os.getenv('MS_SQL_DATABASE'),
+                'server': os.getenv('MS_SQL_SERVER')
                 'timestamp': current_time,
                 'row_count': len(rows),
                 'data': data_list
