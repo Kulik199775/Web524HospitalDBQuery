@@ -104,3 +104,25 @@ class HospitalDB:
                         ORDER BY d.Salary DESC;"""
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
+
+    def union_query(self):
+        """Объединение имен спонсоров и названий обследований"""
+        SQL_QUERY = """SELECT Name FROM dbo.Sponsors
+                        UNION
+                        SELECT Name FROM dbo.Examinations
+                        ORDER BY Name;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
+
+    def union_all_query(self):
+        """Объединение всех врачей и отделений (все строки, включая дубли)"""
+        SQL_QUERY = """SELECT 'Doctor' as Type, Surname + ' ' + Name as FullName, 
+                        CAST(Salary as nvarchar(20)) as Details
+                        FROM dbo.Doctors
+                        UNION ALL
+                        SELECT 'Department' as Type, Name as FullName, 
+                                'Building ' + CAST(Building as nvarchar(10)) as Details
+                        FROM dbo.Departments
+                        ORDER BY Type, FullName;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
