@@ -126,3 +126,27 @@ class HospitalDB:
                         ORDER BY Type, FullName;"""
         self.cursor.execute(SQL_QUERY)
         return self.cursor.fetchall()
+
+    def inner_join_query(self):
+        """Врачи и их обследования"""
+        SQL_QUERY = """ SELECT d.Surname, d.Name as DoctorName,
+                            e.Name as ExaminationName,
+                            de.StartTime, de.EndTime
+                        FROM dbo.Doctors d
+                        INNER JOIN dbo.DoctorsExaminations de ON d.id = de.DoctorId
+                        INNER JOIN dbo.Examination e ON de.ExaminationId = e.id
+                        ORDER BY d.Surname, de.StartTime;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
+
+    def left_join_query(self):
+        """Все врачи и их обследования"""
+        SQL_QUERY = """SELECT d.Surname, d.Name as DoctorName,
+                            e.Name as ExaminationName,
+                            de.StartTime, de.EndTime
+                        FROM dbo.Doctors d
+                        LEFT JOIN dbo.DoctorsExaminations de ON d.id = de.DoctorId
+                        LEFT JOIN dbo.Examinations e ON de.ExaminationId = e.id
+                        ORDER BY d.Surname;"""
+        self.cursor.execute(SQL_QUERY)
+        return self.cursor.fetchall()
