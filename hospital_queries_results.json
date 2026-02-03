@@ -1,0 +1,475 @@
+{
+  "queries": [
+    {
+      "query_name": "EXISTS_1 - Врачи с премией > 5000",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 1,
+      "data": [
+        {
+          "Surname": "Козлов",
+          "Name": "Алексей",
+          "Salary": "52000.00",
+          "Premium": "6000.00"
+        }
+      ]
+    },
+    {
+      "query_name": "ANY - Врачи с зарплатой больше любой",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 0,
+      "data": []
+    },
+    {
+      "query_name": "SOME - Спонсоры 1 корпуса",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 0,
+      "data": []
+    },
+    {
+      "query_name": "ALL - Врачи с зарплатой больше всех",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 6,
+      "data": [
+        {
+          "Surname": "Петров",
+          "Name": "Петр",
+          "Salary": "45000.00",
+          "Premium": "3000.00"
+        },
+        {
+          "Surname": "Смирнова",
+          "Name": "Ольга",
+          "Salary": "47000.00",
+          "Premium": "3500.00"
+        },
+        {
+          "Surname": "Сидорова",
+          "Name": "Мария",
+          "Salary": "48000.00",
+          "Premium": "4000.00"
+        },
+        {
+          "Surname": "Васильев",
+          "Name": "Дмитрий",
+          "Salary": "49000.00",
+          "Premium": "4500.00"
+        },
+        {
+          "Surname": "Иванов",
+          "Name": "Иван",
+          "Salary": "50000.00",
+          "Premium": "5000.00"
+        },
+        {
+          "Surname": "Козлов",
+          "Name": "Алексей",
+          "Salary": "52000.00",
+          "Premium": "6000.00"
+        }
+      ]
+    },
+    {
+      "query_name": "Combined - ANY/ALL сочетание",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 6,
+      "data": [
+        {
+          "Surname": "Козлов",
+          "Name": "Алексей",
+          "Salary": "52000.00",
+          "Premium": "6000.00"
+        },
+        {
+          "Surname": "Иванов",
+          "Name": "Иван",
+          "Salary": "50000.00",
+          "Premium": "5000.00"
+        },
+        {
+          "Surname": "Васильев",
+          "Name": "Дмитрий",
+          "Salary": "49000.00",
+          "Premium": "4500.00"
+        },
+        {
+          "Surname": "Сидорова",
+          "Name": "Мария",
+          "Salary": "48000.00",
+          "Premium": "4000.00"
+        },
+        {
+          "Surname": "Смирнова",
+          "Name": "Ольга",
+          "Salary": "47000.00",
+          "Premium": "3500.00"
+        },
+        {
+          "Surname": "Петров",
+          "Name": "Петр",
+          "Salary": "45000.00",
+          "Premium": "3000.00"
+        }
+      ]
+    },
+    {
+      "query_name": "UNION - Спонсоры и обследования",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 11,
+      "data": [
+        {
+          "Name": "Анализ крови"
+        },
+        {
+          "Name": "БиоМед Инновации"
+        },
+        {
+          "Name": "ЕвроМед Сервис"
+        },
+        {
+          "Name": "Здоровье нации Фонд"
+        },
+        {
+          "Name": "Медицинские технологии ООО"
+        },
+        {
+          "Name": "МРТ головного мозга"
+        },
+        {
+          "Name": "Рентген грудной клетки"
+        },
+        {
+          "Name": "УЗИ сердца"
+        },
+        {
+          "Name": "ФармаГрупп АО"
+        },
+        {
+          "Name": "ЭКГ"
+        },
+        {
+          "Name": "Эндоскопия"
+        }
+      ]
+    },
+    {
+      "query_name": "UNION ALL - Врачи и отделения",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 12,
+      "data": [
+        {
+          "Type": "Department",
+          "FullName": "Кардиология",
+          "Details": "Building 1"
+        },
+        {
+          "Type": "Department",
+          "FullName": "Неврология",
+          "Details": "Building 1"
+        },
+        {
+          "Type": "Department",
+          "FullName": "Ортопедия",
+          "Details": "Building 3"
+        },
+        {
+          "Type": "Department",
+          "FullName": "Педиатрия",
+          "Details": "Building 3"
+        },
+        {
+          "Type": "Department",
+          "FullName": "Терапия",
+          "Details": "Building 2"
+        },
+        {
+          "Type": "Department",
+          "FullName": "Хирургия",
+          "Details": "Building 2"
+        },
+        {
+          "Type": "Doctor",
+          "FullName": "Васильев Дмитрий",
+          "Details": "49000.00"
+        },
+        {
+          "Type": "Doctor",
+          "FullName": "Иванов Иван",
+          "Details": "50000.00"
+        },
+        {
+          "Type": "Doctor",
+          "FullName": "Козлов Алексей",
+          "Details": "52000.00"
+        },
+        {
+          "Type": "Doctor",
+          "FullName": "Петров Петр",
+          "Details": "45000.00"
+        },
+        {
+          "Type": "Doctor",
+          "FullName": "Сидорова Мария",
+          "Details": "48000.00"
+        },
+        {
+          "Type": "Doctor",
+          "FullName": "Смирнова Ольга",
+          "Details": "47000.00"
+        }
+      ]
+    },
+    {
+      "query_name": "INNER JOIN - Врачи и обследования",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 7,
+      "data": [
+        {
+          "Surname": "Васильев",
+          "DoctorName": "Дмитрий",
+          "ExaminationName": "ЭКГ",
+          "StartTime": "15:00:00",
+          "EndTime": "16:00:00"
+        },
+        {
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "ExaminationName": "ЭКГ",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00"
+        },
+        {
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "ExaminationName": "УЗИ сердца",
+          "StartTime": "10:30:00",
+          "EndTime": "11:30:00"
+        },
+        {
+          "Surname": "Козлов",
+          "DoctorName": "Алексей",
+          "ExaminationName": "Анализ крови",
+          "StartTime": "11:00:00",
+          "EndTime": "12:00:00"
+        },
+        {
+          "Surname": "Петров",
+          "DoctorName": "Петр",
+          "ExaminationName": "МРТ головного мозга",
+          "StartTime": "14:00:00",
+          "EndTime": "15:00:00"
+        },
+        {
+          "Surname": "Сидорова",
+          "DoctorName": "Мария",
+          "ExaminationName": "Рентген грудной клетки",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00"
+        },
+        {
+          "Surname": "Смирнова",
+          "DoctorName": "Ольга",
+          "ExaminationName": "Эндоскопия",
+          "StartTime": "13:00:00",
+          "EndTime": "14:00:00"
+        }
+      ]
+    },
+    {
+      "query_name": "LEFT JOIN - Все врачи",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 7,
+      "data": [
+        {
+          "Surname": "Васильев",
+          "DoctorName": "Дмитрий",
+          "ExaminationName": "ЭКГ",
+          "StartTime": "15:00:00",
+          "EndTime": "16:00:00"
+        },
+        {
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "ExaminationName": "ЭКГ",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00"
+        },
+        {
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "ExaminationName": "УЗИ сердца",
+          "StartTime": "10:30:00",
+          "EndTime": "11:30:00"
+        },
+        {
+          "Surname": "Козлов",
+          "DoctorName": "Алексей",
+          "ExaminationName": "Анализ крови",
+          "StartTime": "11:00:00",
+          "EndTime": "12:00:00"
+        },
+        {
+          "Surname": "Петров",
+          "DoctorName": "Петр",
+          "ExaminationName": "МРТ головного мозга",
+          "StartTime": "14:00:00",
+          "EndTime": "15:00:00"
+        },
+        {
+          "Surname": "Сидорова",
+          "DoctorName": "Мария",
+          "ExaminationName": "Рентген грудной клетки",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00"
+        },
+        {
+          "Surname": "Смирнова",
+          "DoctorName": "Ольга",
+          "ExaminationName": "Эндоскопия",
+          "StartTime": "13:00:00",
+          "EndTime": "14:00:00"
+        }
+      ]
+    },
+    {
+      "query_name": "RIGHT JOIN - Все обследования",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 7,
+      "data": [
+        {
+          "ExaminationName": "Анализ крови",
+          "Surname": "Козлов",
+          "DoctorName": "Алексей",
+          "StartTime": "11:00:00",
+          "EndTime": "12:00:00"
+        },
+        {
+          "ExaminationName": "МРТ головного мозга",
+          "Surname": "Петров",
+          "DoctorName": "Петр",
+          "StartTime": "14:00:00",
+          "EndTime": "15:00:00"
+        },
+        {
+          "ExaminationName": "Рентген грудной клетки",
+          "Surname": "Сидорова",
+          "DoctorName": "Мария",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00"
+        },
+        {
+          "ExaminationName": "УЗИ сердца",
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "StartTime": "10:30:00",
+          "EndTime": "11:30:00"
+        },
+        {
+          "ExaminationName": "ЭКГ",
+          "Surname": "Васильев",
+          "DoctorName": "Дмитрий",
+          "StartTime": "15:00:00",
+          "EndTime": "16:00:00"
+        },
+        {
+          "ExaminationName": "ЭКГ",
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00"
+        },
+        {
+          "ExaminationName": "Эндоскопия",
+          "Surname": "Смирнова",
+          "DoctorName": "Ольга",
+          "StartTime": "13:00:00",
+          "EndTime": "14:00:00"
+        }
+      ]
+    },
+    {
+      "query_name": "FULL JOIN - Все врачи и обследования",
+      "database": "Hospital",
+      "server": "DMITRY\\SQLEXPRESS",
+      "timestamp": "2026-01-29 23:02:39",
+      "row_count": 7,
+      "data": [
+        {
+          "Surname": "Козлов",
+          "DoctorName": "Алексей",
+          "ExaminationName": "Анализ крови",
+          "StartTime": "11:00:00",
+          "EndTime": "12:00:00",
+          "JoinType": "Doctor-Examination"
+        },
+        {
+          "Surname": "Петров",
+          "DoctorName": "Петр",
+          "ExaminationName": "МРТ головного мозга",
+          "StartTime": "14:00:00",
+          "EndTime": "15:00:00",
+          "JoinType": "Doctor-Examination"
+        },
+        {
+          "Surname": "Сидорова",
+          "DoctorName": "Мария",
+          "ExaminationName": "Рентген грудной клетки",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00",
+          "JoinType": "Doctor-Examination"
+        },
+        {
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "ExaminationName": "УЗИ сердца",
+          "StartTime": "10:30:00",
+          "EndTime": "11:30:00",
+          "JoinType": "Doctor-Examination"
+        },
+        {
+          "Surname": "Васильев",
+          "DoctorName": "Дмитрий",
+          "ExaminationName": "ЭКГ",
+          "StartTime": "15:00:00",
+          "EndTime": "16:00:00",
+          "JoinType": "Doctor-Examination"
+        },
+        {
+          "Surname": "Иванов",
+          "DoctorName": "Иван",
+          "ExaminationName": "ЭКГ",
+          "StartTime": "09:00:00",
+          "EndTime": "10:00:00",
+          "JoinType": "Doctor-Examination"
+        },
+        {
+          "Surname": "Смирнова",
+          "DoctorName": "Ольга",
+          "ExaminationName": "Эндоскопия",
+          "StartTime": "13:00:00",
+          "EndTime": "14:00:00",
+          "JoinType": "Doctor-Examination"
+        }
+      ]
+    }
+  ]
+}
